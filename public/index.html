@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carga de documentos — Baltic Transline</title>
+<meta name="description" content="Cargá y enviá la documentación solicitada por Baltic Transline: pasaporte, identidad, licencias, antecedentes, apostillado y certificado médico.">
+<style>
+  :root {
+    --azul: #0b3a66;
+    --azul-claro: #eaf2fa;
+    --borde: #d5deea;
+    --texto: #1c2733;
+    --suave: #5c6b7c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f4f7fb;
+    color: var(--texto);
+    line-height: 1.5;
+  }
+  .contenedor {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  .encabezado {
+    background: var(--azul);
+    color: #fff;
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+  }
+  .encabezado h1 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+  }
+  .encabezado p {
+    margin: 0;
+    color: #cfe0f2;
+  }
+  .tarjeta {
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .tarjeta h2 {
+    margin: 0 0 12px;
+    font-size: 1.15rem;
+    color: var(--azul);
+  }
+  .descargas a {
+    display: block;
+    padding: 12px 14px;
+    margin: 8px 0;
+    background: var(--azul-claro);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    color: var(--azul);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .descargas a:hover { background: #dce9f7; }
+  .aviso {
+    font-size: 0.9rem;
+    color: var(--suave);
+    margin: 6px 0 0;
+  }
+  form { margin: 0; }
+  .campo { margin-bottom: 20px; }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .opcional { font-weight: 400; color: var(--suave); font-size: 0.85rem; }
+  input[type="text"], input[type="email"], input[type="tel"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fbfdff;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+    outline: 2px solid var(--azul);
+    outline-offset: 0;
+    border-color: var(--azul);
+  }
+  input[type="file"] { width: 100%; font-size: 0.95rem; }
+  .separador {
+    border: 0;
+    border-top: 1px solid var(--borde);
+    margin: 24px 0;
+  }
+  .subtitulo-seccion {
+    font-weight: 700;
+    color: var(--azul);
+    margin: 0 0 4px;
+  }
+  button[type="submit"] {
+    width: 100%;
+    background: var(--azul);
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  button[type="submit"]:hover { background: #0d4a80; }
+  .pie {
+    text-align: center;
+    color: var(--suave);
+    font-size: 0.85rem;
+  }
+  @media (max-width: 480px) {
+    .encabezado { padding: 20px 16px; }
+    .tarjeta { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div class="encabezado">
+    <h1>Carga de documentos Baltic Transline</h1>
+    <p>Por favor, cargue los documentos solicitados por la empresa.</p>
+  </div>
+
+  <div class="tarjeta">
+    <h2>Documentos de la empresa</h2>
+    <div class="descargas">
+      <a href="documentos/Requisitos%20Croacia.pdf" download>Requisitos Croacia — Descargar PDF</a>
+      <a href="documentos/Certificado%20m%C3%A9dico.pdf" download>Certificado médico — Descargar PDF</a>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <form name="carga-documentos" method="POST" action="/gracias" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="carga-documentos">
+      <p style="display:none">
+        <label>No completar este campo: <input name="bot-field"></label>
+      </p>
+      <input type="hidden" name="subject" value="Nueva carga de documentos — %{submissionId}">
+
+      <h2 class="subtitulo-seccion">Datos del postulante</h2>
+
+      <div class="campo">
+        <label for="nombre">Nombre y apellido:</label>
+        <input type="text" id="nombre" name="nombre" required>
+      </div>
+
+      <div class="campo">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="campo">
+        <label for="telefono">Teléfono <span class="opcional">(opcional)</span>:</label>
+        <input type="tel" id="telefono" name="telefono">
+      </div>
+
+      <hr class="separador">
+
+      <h2 class="subtitulo-seccion">Documentación</h2>
+      <p class="aviso">Se aceptan imágenes o PDF. Tamaño máximo total por envío: 8&nbsp;MB. Un archivo por campo.</p>
+
+      <div class="campo">
+        <label for="pasaporte">Foto del pasaporte:</label>
+        <input type="file" id="pasaporte" name="pasaporte" accept="image/*,.pdf">
+      </div>
+
+      <div class="campo">
+        <label for="documento">Foto del documento de identidad:</label>
+        <input type="file" id="documento" name="documento" accept="image/*,.pdf">
+      </div>
+
+      <div class="campo">
+        <label for="licencia">Licencia de conducir:</label>
+        <input type="file" id="licencia" name="licencia" accept="image/*,.pdf">
+      </div>
+
+      <div class="campo">
+        <label for="licencia-internacional">Licencia internacional (A.C.A):</label>
+        <input type="file" id="licencia-internacional" name="licencia-internacional" accept="image/*,.pdf">
+      </div>
+
+      <div class="campo">
+        <label for="antecedentes">Certificado de antecedentes penales:</label>
+        <input type="file" id="antecedentes" name="antecedentes" accept="image/*,.pdf">
+      </div>
+
+      <div class="campo">
+        <label for="apostillado">Certificado apostillado:</label>
+        <input type="file" id="apostillado" name="apostillado" accept="image/*,.pdf">
+      </div>
+
+      <div class="campo">
+        <label for="medico">Certificado médico:</label>
+        <input type="file" id="medico" name="medico" accept="image/*,.pdf">
+      </div>
+
+      <button type="submit">Enviar documentación</button>
+    </form>
+  </div>
+
+  <p class="pie">Baltic Transline — Carga de documentación de postulantes</p>
+
+</div>
+</body>
+</html>
